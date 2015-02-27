@@ -167,7 +167,7 @@ public class KeepReaderService extends Service {
 		//0 = App started
 		//1 = Send another part of list [1 = part of list];
 		//2 = Start sending note
-		//3 = Data from pebble / note type specific
+        //3 = Data from pebble / note type specific
 
 		if (id == 0 && instance == null)
 		{

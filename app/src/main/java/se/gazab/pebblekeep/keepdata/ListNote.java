@@ -51,22 +51,6 @@ public class ListNote extends KeepItem {
 		return title;
 	}
 
-	private void sendNote(Context context, int location)
-	{
-		int length = Math.min(trimmedText.length() - location, 75);
-
-		PebbleDictionary data = new PebbleDictionary();
-
-		data.addInt8(0, (byte) 2);
-		data.addUint16(1, location);
-		data.addUint16(2,  length);
-
-		String subString = trimmedText.substring(location, location + length);
-		data.addString(4, subString);
-
-		PebbleKit.sendDataToPebble(context, DataReceiver.keepUUID, data);
-	}
-
     private void sendListPart(Context context, int index)
     {
         //0 = ID
@@ -90,7 +74,6 @@ public class ListNote extends KeepItem {
 
             data.addString(3 + i, Pebble.prepareString(items.get(entry), 20));
         }
-
         PebbleKit.sendDataToPebble(context, DataReceiver.keepUUID, data);
     }
 	
@@ -101,8 +84,8 @@ public class ListNote extends KeepItem {
 
 	@Override
 	public void dataReceived(PebbleDictionary data, Context context) {		
-		int location = data.getUnsignedInteger(1).intValue();
-		sendNote(context, location);
+		int index = data.getUnsignedInteger(1).intValue();
+        sendListPart(context, index);
 
 	}
 }
